@@ -1,0 +1,16 @@
+{
+  "name": "eo13792bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "classifier.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel James",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^1.7.1",
+    "sentence-tokenizer": "0.0.8",
+    "sentiment": "^4.0.0"
+  }
+}
