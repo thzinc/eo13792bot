@@ -4,7 +4,8 @@
   "description": "",
   "main": "classifier.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "wt create -w -b --secrets-file .secrets .",
+    "build": "wt create -b --secrets-file .secrets ."
   },
   "author": "Daniel James",
   "license": "MIT",
@@ -14,5 +15,8 @@
     "sentence-tokenizer": "0.0.8",
     "sentiment": "^4.0.0",
     "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "wt-cli": "^6.1.0"
   }
 }
