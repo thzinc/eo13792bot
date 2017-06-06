@@ -20,7 +20,11 @@ const mapDocument = (document) => {
     }))
     .reduce((min, sentence) => {
       const last = min || sentence;
-      return last.score < sentence.score ? last : sentence;
+      return last.score < sentence.score
+        ? last
+        : (
+          last.sentence.length < sentence.sentence.length ? sentence : last
+        );
     });
   const hash = md5(tokenizer.getTokens().join(' '));
   return {
@@ -50,7 +54,7 @@ const getDocuments = (apiKey, docketId, backlogCount) => {
 module.exports = (ctx, cb) => {
   const docketId = 'DOI-2017-0002';
   const apiKey = ctx.secrets.REGULATIONS_GOV_API_KEY;
-  const backlogCount = 100;
+  const backlogCount = 250;
 
   const client = new Twitter({
     consumer_key: ctx.secrets.TWITTER_CONSUMER_KEY,
@@ -73,7 +77,11 @@ module.exports = (ctx, cb) => {
         .filter(document => document.tweet.length < 120)
         .reduce((l, curr) => {
           const last = l || curr;
-          return last.score < curr.score ? last : curr;
+          return last.score < curr.score
+            ? last
+            : (
+              last.tweet.length < curr.tweet.length ? curr : last
+            );
         }))
       .then(document => {
         backlog[document.hash] = true;
@@ -81,6 +89,10 @@ module.exports = (ctx, cb) => {
         client.post('statuses/update', {
           status: `${document.tweet} https://www.regulations.gov/document?D=${document.documentId}`,
         }, cb);
+      })
+      .catch(err => {
+        console.error('error', err);
+        cb(err);
       });
   })
 }
