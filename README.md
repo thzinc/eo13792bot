@@ -11,7 +11,6 @@ The Quoter pulls recent public submissions from Regulations.gov on docket [DOI-2
 ### Example tweet
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Once these lands are gone, there is no bringing them back or replacement. <a href="https://twitter.com/hashtag/EO13792?src=hash">#EO13792</a> <a href="https://t.co/4NaHP8DdvP">https://t.co/4NaHP8DdvP</a></p>&mdash; EO 13792 Bot (@EO13792Bot) <a href="https://twitter.com/EO13792Bot/status/872992092640862208">June 9, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Needler
 
@@ -20,7 +19,6 @@ The Needler pulls tweets by the Quoter and retweets them with a randomly-chosen 
 ### Example tweet
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Hey <a href="https://twitter.com/DOIPressSec">@DOIPressSec</a>, this person took time out of their day to talk to you about your review of National Monuments. <a href="https://t.co/55EOErqLBM">https://t.co/55EOErqLBM</a></p>&mdash; EO 13792 Bot (@EO13792Bot) <a href="https://twitter.com/EO13792Bot/status/873010079288541184">June 9, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Contributing
 

@@ -51,7 +51,10 @@ module.exports = (ctx, cb) => {
     access_token_secret: ctx.secrets.TWITTER_ACCESS_TOKEN_SECRET
   });
   
-  client.get('statuses/user_timeline', { screen_name: ctx.secrets.TWITTER_SCREEN_NAME })
+  client.get('statuses/user_timeline', {
+      screen_name: ctx.secrets.TWITTER_SCREEN_NAME,
+      exclude_replies: true,
+    })
     // Select random tweet
     .then(tweets => tweets[Math.floor(Math.random() * tweets.length)])
     // Get tweet URL
