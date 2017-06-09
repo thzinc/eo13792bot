@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "wt create -w -b --secrets-file .secrets .",
-    "publish": "wt cron schedule -b --secrets-file .secrets 10m ."
+    "start": "wt create -w -b --secrets-file ../.secrets .",
+    "publish": "wt cron schedule -b --secrets-file ../.secrets 10m ."
   },
   "author": "Daniel James",
   "license": "MIT",
