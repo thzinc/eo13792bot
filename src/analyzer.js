@@ -1,3 +1,4 @@
+'use latest';
 import sentiment from 'sentiment';
 import Tokenizer from 'sentence-tokenizer';
 import md5 from 'md5';

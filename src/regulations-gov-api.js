@@ -1,3 +1,4 @@
+'use latest';
 import fetch from 'node-fetch';
 
 const baseUrl = 'https://api.data.gov/regulations/v3';

@@ -2,10 +2,10 @@
   "name": "eo13792bot",
   "version": "1.1.0",
   "description": "",
-  "main": "src/classifier.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "wt create -w -b --secrets-file .secrets .",
-    "build": "wt create -b --secrets-file .secrets ."
+    "publish": "wt cron schedule -b --secrets-file .secrets 10m ."
   },
   "author": "Daniel James",
   "license": "MIT",

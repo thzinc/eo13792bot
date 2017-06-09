@@ -1,3 +1,4 @@
+'use latest';
 import getRecentComments from './regulations-gov-api';
 import analyze from './analyzer';
 
