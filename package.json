@@ -1,8 +1,8 @@
 {
   "name": "eo13792bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
-  "main": "classifier.js",
+  "main": "src/classifier.js",
   "scripts": {
     "start": "wt create -w -b --secrets-file .secrets .",
     "build": "wt create -b --secrets-file .secrets ."
