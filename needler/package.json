@@ -1,0 +1,18 @@
+{
+  "name": "eo13792bot-needler",
+  "version": "1.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "wt create -w -b --secrets-file ../.secrets .",
+    "publish": "wt cron schedule -b --secrets-file ../.secrets 4m ."
+  },
+  "author": "Daniel James",
+  "license": "MIT",
+  "dependencies": {
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "wt-cli": "^6.1.0"
+  }
+}
