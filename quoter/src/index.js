@@ -5,7 +5,7 @@ import getSingleComment from './tweetUtils';
 module.exports = (ctx, cb) => {
   const docketId = 'DOI-2017-0002';
   const apiKey = ctx.secrets.REGULATIONS_GOV_API_KEY;
-  const backlogCount = 250;
+  const backlogCount = 500;
 
   const client = new Twitter({
     consumer_key: ctx.secrets.TWITTER_CONSUMER_KEY,
@@ -16,15 +16,20 @@ module.exports = (ctx, cb) => {
 
   ctx.storage.get((error, data) => {
     const backlog = data || {};
+    console.log(`backlog has ${Object.keys(backlog).length} keys`);
 
     getSingleComment(apiKey, docketId, backlogCount, backlog)
       .then(document => {
-        backlog[document.hash] = true;
-        ctx.storage.set(backlog, console.log);
-        client.post('statuses/update', {
-          status: `${document.tweet} ${document.targetUrl}`,
-        }, cb);
+        const status = `${document.tweet} ${document.targetUrl}`;
+        return client.post('statuses/update', { status }).then(() => document);
       })
+      .then(document => {
+        backlog[document.hash] = true;
+        ctx.storage.set(backlog, console.error);
+        console.log(`backlog now has ${Object.keys(backlog).length} keys`);
+        return document;
+      })
+      .then(cb.bind(null, null))
       .catch(err => {
         console.error('error', err);
         cb(err);

@@ -28,18 +28,18 @@ const getDocuments = (apiKey, docketId, backlogCount) => {
 
 export default (apiKey, docketId, backlogCount, excludedHashes) =>
   getDocuments(apiKey, docketId, backlogCount)
-    .then(documents => documents
-      .reduce((o, d) => {
-        o[d.hash] = o[d.hash] || d;
-        return o;
-      }, {}))
+    .then(documents => documents.reduce((o, d) => {
+      o[d.hash] = o[d.hash] || d;
+      return o;
+    }, {}))
     .then(obj => Object.keys(obj)
       .map(k => obj[k])
       .filter(document => !excludedHashes[document.hash])
-      .filter(document => document.tweet.length < tweetLength)
-      .reduce((l, curr) => {
-        const last = l || curr;
-        return last.score < curr.score
-          ? last
-          : (last.tweet.length < curr.tweet.length ? curr : last);
-      }));
+      .filter(document => document.tweet.length < tweetLength))
+    .then(documents => documents.length ? documents : Promise.reject('No document fits Quoter criteria'))
+    .then(documents => documents.reduce((l, curr) => {
+      const last = l || curr;
+      return last.score < curr.score
+        ? last
+        : (last.tweet.length < curr.tweet.length ? curr : last);
+    }))
