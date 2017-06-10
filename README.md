@@ -14,6 +14,8 @@ The Quoter pulls recent public submissions from Regulations.gov on docket [DOI-2
 
 ## Needler
 
+__Turned off Needler due to spammy behavior__
+
 The Needler pulls tweets by the Quoter and retweets them with a randomly-chosen madlib-style tweet to one of several Department of Interior or Ryan Zinke Twitter accounts.
 
 ### Example tweet
