@@ -36,7 +36,9 @@ export default (apiKey, docketId, backlogCount, excludedHashes) =>
       .map(k => obj[k])
       .filter(document => !excludedHashes[document.hash])
       .filter(document => document.tweet.length < tweetLength))
-    .then(documents => documents.length ? documents : Promise.reject('No document fits Quoter criteria'))
+    .then(documents => documents.length ? documents : Promise.reject({
+      type: 'no-comments',
+    }))
     .then(documents => documents.reduce((l, curr) => {
       const last = l || curr;
       return last.score < curr.score

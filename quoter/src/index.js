@@ -16,7 +16,12 @@ module.exports = (ctx, cb) => {
 
   ctx.storage.get((error, data) => {
     const backlog = data || {};
-    console.log(`backlog has ${Object.keys(backlog).length} keys`);
+    console.log(`backlog has ${Object.keys(backlog).length} keys!`);
+
+    if (ctx.data.dump) {
+      cb(null, backlog);
+      return;
+    }
 
     getSingleComment(apiKey, docketId, backlogCount, backlog)
       .then(document => {
@@ -25,6 +30,7 @@ module.exports = (ctx, cb) => {
       })
       .then(document => {
         backlog[document.hash] = true;
+        backlog.lastError = null;
         ctx.storage.set(backlog, console.error);
         console.log(`backlog now has ${Object.keys(backlog).length} keys`);
         return document;
@@ -32,7 +38,38 @@ module.exports = (ctx, cb) => {
       .then(cb.bind(null, null))
       .catch(err => {
         console.error('error', err);
-        cb(err);
+        if (err.type) {
+          if (backlog.lastError !== err.type) {
+            backlog.lastError = err.type;
+            ctx.storage.set(backlog, console.error);
+            switch (err.type) {
+              case 'no-comments': {
+                client.post('statuses/update', {
+                  status: `There aren't any new comments to post right now. Maybe go leave a comment yourself: l.thzinc.com/doi20170002 #EO13792`
+                })
+                  .then(cb.bind(null, null))
+                break;
+              }
+              case 'source-api-timeout': {
+                client.post('statuses/update', {
+                  status: `I can't get to the @RegulationsGov site right now, so comments will have to wait. #EO13792`
+                })
+                  .then(cb.bind(null, null))
+                break;
+              }
+              default: {
+                console.error('Got an error type that was not handled');
+                cb(null, 'Unhandled trivial error');
+              }
+            }
+          } else {
+            console.log(`Skipping ${err.type} because it was last handled`);
+            cb(null, err);
+          }
+        } else {
+          console.error('Not sure what to do with this error. Bailing out.');
+          cb(err);
+        }
       });
   })
 }
