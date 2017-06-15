@@ -6,7 +6,7 @@ const maxTweetLength = 140;
 const shortUrlLength = 23;
 const tweetLength = maxTweetLength - shortUrlLength - 1;
 
-const formatTweet = (pullQuote) => `${pullQuote} #EO13792`;
+const formatTweet = (pullQuote) => `${pullQuote}${Math.floor(Math.random() * 2) && ' #EO13792' || ''}`;
 
 const mapDocument = (document) => {
   const analysis = analyze(document.commentText);

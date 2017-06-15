@@ -45,14 +45,14 @@ module.exports = (ctx, cb) => {
             switch (err.type) {
               case 'no-comments': {
                 client.post('statuses/update', {
-                  status: `There aren't any new comments to post right now. Maybe go leave a comment yourself: l.thzinc.com/doi20170002 #EO13792`
+                  status: `There aren't any new comments to post right now. Maybe go leave a comment yourself: l.thzinc.com/doi20170002`
                 })
                   .then(cb.bind(null, null))
                 break;
               }
               case 'source-api-timeout': {
                 client.post('statuses/update', {
-                  status: `I can't get to the @RegulationsGov site right now, so comments will have to wait. #EO13792`
+                  status: `I can't get to the @RegulationsGov site right now, so comments will have to wait.`
                 })
                   .then(cb.bind(null, null))
                 break;
