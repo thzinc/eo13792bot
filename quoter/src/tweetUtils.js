@@ -6,25 +6,24 @@ const maxTweetLength = 140;
 const shortUrlLength = 23;
 const tweetLength = maxTweetLength - shortUrlLength - 1;
 
-const formatTweet = (pullQuote) => `${pullQuote}${Math.floor(Math.random() * 2) && ' #EO13792' || ''}`;
+const coinFlip = () => !!Math.floor(Math.random() * 2);
 
-const mapDocument = (document) => {
-  const analysis = analyze(document.commentText);
+const formatTweet = (pullQuote) => `${pullQuote}${coinFlip() && ' #EO13792' || ''}`;
 
-  return {
-    documentId: document.documentId,
-    commentText: document.commentText,
-    tweet: formatTweet(analysis.pullQuote.sentence),
-    targetUrl: `https://www.regulations.gov/document?D=${document.documentId}`,
-    score: analysis.pullQuote.score,
-    hash: analysis.hash,
-  };
-};
-
-const getDocuments = (apiKey, docketId, backlogCount) => {
-  return getRecentComments(apiKey, docketId, backlogCount)
-    .then(documents => documents.map(mapDocument));
-}
+const getDocuments = (apiKey, docketId, backlogCount) =>
+  getRecentComments(apiKey, docketId, backlogCount)
+  .then(documents => documents.map((document) => {
+    const analysis = analyze(document.commentText);
+  
+    return {
+      documentId: document.documentId,
+      commentText: document.commentText,
+      tweet: formatTweet(analysis.pullQuote.sentence),
+      targetUrl: `https://www.regulations.gov/document?D=${document.documentId}`,
+      score: analysis.pullQuote.score,
+      hash: analysis.hash,
+    };
+  }));
 
 export default (apiKey, docketId, backlogCount, excludedHashes) =>
   getDocuments(apiKey, docketId, backlogCount)

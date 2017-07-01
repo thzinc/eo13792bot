@@ -7,6 +7,7 @@ module.exports = (ctx, cb) => {
   const apiKey = ctx.secrets.REGULATIONS_GOV_API_KEY;
   const backlogCount = 500;
 
+  // Set up Twitter API client
   const client = new Twitter({
     consumer_key: ctx.secrets.TWITTER_CONSUMER_KEY,
     consumer_secret: ctx.secrets.TWITTER_CONSUMER_SECRET,
@@ -14,28 +15,33 @@ module.exports = (ctx, cb) => {
     access_token_secret: ctx.secrets.TWITTER_ACCESS_TOKEN_SECRET
   });
 
+  // Get the context storage into `data`
   ctx.storage.get((error, data) => {
     const backlog = data || {};
-    console.log(`backlog has ${Object.keys(backlog).length} keys!`);
 
     if (ctx.data.dump) {
       cb(null, backlog);
       return;
     }
 
+    // Get a single comment to tweet
     getSingleComment(apiKey, docketId, backlogCount, backlog)
+      // Then tweet it
       .then(document => {
         const status = `${document.tweet} ${document.targetUrl}`;
         return client.post('statuses/update', { status }).then(() => document);
       })
+      // Then add the comment's hash to the context storage 
       .then(document => {
         backlog[document.hash] = true;
         backlog.lastError = null;
+        // If something bad happened while saving to context storage, log it to STDERR and move on. No big deal.
         ctx.storage.set(backlog, console.error);
-        console.log(`backlog now has ${Object.keys(backlog).length} keys`);
         return document;
       })
+      // Then hit the Webtask's callback and end this request
       .then(cb.bind(null, null))
+      // If anything went wrong with the above, handle it
       .catch(err => {
         console.error('error', err);
         if (err.type) {
