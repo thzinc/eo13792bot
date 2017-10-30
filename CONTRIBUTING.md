@@ -1,1 +1,16 @@
-While I appreciate offers to contribute to this repo, this code is frozen now. Feel free to fork this repo and extend it to apply to your needs.
+# Contributing
+
+We are committed to fostering an open and welcoming environment. Please read our [code of conduct](CODE_OF_CONDUCT.md) before participating in or contributing to this project.
+
+When contributing to this repository, we recommend discussing your feature, bug fix, or other contribution via an issue in this repository. If the change requires direct communication with the maintainers, send an email to daniel@thzinc.com.
+
+## Pull Request Process
+
+1. Fork this repository
+2. Make the changes as you wish
+3. Submit a pull request back to this repository with a reference to the issue
+
+### Process for Maintainers
+
+1. Ensure that pull requests pass all applicable tests and successfully build the project
+2. Merge the pull request, and if applicable, clean up any merged branch
