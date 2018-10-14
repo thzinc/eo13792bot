@@ -6,9 +6,7 @@ const maxTweetLength = 140;
 const shortUrlLength = 23;
 const tweetLength = maxTweetLength - shortUrlLength - 1;
 
-const coinFlip = () => !!Math.floor(Math.random() * 2);
-
-const formatTweet = (pullQuote) => `${pullQuote}${coinFlip() && ' #EO13792' || ''}`;
+const formatTweet = (pullQuote) => `${pullQuote}`;
 
 const getDocuments = (apiKey, docketId, backlogCount) =>
   getRecentComments(apiKey, docketId, backlogCount)
