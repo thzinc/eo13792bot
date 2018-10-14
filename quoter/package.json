@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "wt create -w -b --secrets-file ../.secrets .",
-    "publish": "wt cron schedule -b --secrets-file ../.secrets 10m ."
+    "publish": "wt cron create -b --secrets-file ../.secrets --schedule 5m ."
   },
   "author": "Daniel James",
   "license": "MIT",
@@ -17,6 +17,6 @@
     "twitter": "^1.7.0"
   },
   "devDependencies": {
-    "wt-cli": "^6.1.0"
+    "wt-cli": "^11.0.0"
   }
 }
