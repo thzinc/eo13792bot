@@ -3,7 +3,7 @@ import Twitter from 'twitter';
 import getSingleComment from './tweetUtils';
 
 module.exports = (ctx, cb) => {
-  const docketId = 'DOI-2017-0002';
+  const docketId = ctx.secrets.DOCKET_ID;
   const apiKey = ctx.secrets.REGULATIONS_GOV_API_KEY;
   const backlogCount = 500;
 
@@ -51,7 +51,7 @@ module.exports = (ctx, cb) => {
             switch (err.type) {
               case 'no-comments': {
                 client.post('statuses/update', {
-                  status: `There aren't any new comments to post right now. Maybe go leave a comment yourself: l.thzinc.com/doi20170002`
+                  status: `There aren't any new comments to post right now. Maybe go leave a comment yourself: ${ctx.secrets.COMMENT_URL}`
                 })
                   .then(cb.bind(null, null))
                 break;
